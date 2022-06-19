@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
 import { HomeIcon } from "@heroicons/react/solid";
@@ -12,10 +12,13 @@ import {
   UserIcon,
   SearchIcon,
 } from "@heroicons/react/outline";
+import useWindowSize from "../hooks/useWindowSize";
+
 export default function Sidebar() {
+  const size = useWindowSize();
   return (
-    <>
-      <div className="hidden sm:flex flex-col p-2 lg:items-start fixed h-full">
+    <div className="hidden sm:flex flex-col p-2 lg:items-start fixed h-full">
+      <div className="">
         {/* Twitter Logo */}
         <div className="hoverEffect p-0 hover:bg-blue-100 lg:px-1">
           <Image
@@ -30,6 +33,12 @@ export default function Sidebar() {
           <SidebarMenuItem text="Explore" Icon={SearchIcon} />
           <SidebarMenuItem text="Notifications" Icon={BellIcon} />
           <SidebarMenuItem text="Messages" Icon={InboxIcon} />
+          {size.width > 1024 && (
+            <>
+              <SidebarMenuItem text="Bookmarks" Icon={BookmarkIcon} />
+              <SidebarMenuItem text="Lists" Icon={ClipboardIcon} />
+            </>
+          )}
           <SidebarMenuItem text="Profile" Icon={UserIcon} />
           <SidebarMenuItem text="More" Icon={DotsCircleHorizontalIcon} />
         </div>
@@ -45,7 +54,7 @@ export default function Sidebar() {
           />
         </button>
       </div>
-      <div className="fixed bottom-1 flex justify-center lg:justify-start p-2">
+      <div className="">
         {/* Mini-Profile */}
         <button
           type="button"
@@ -60,6 +69,6 @@ export default function Sidebar() {
           ></img>
         </button>
       </div>
-    </>
+    </div>
   );
 }
